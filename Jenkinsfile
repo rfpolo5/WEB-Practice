@@ -5,11 +5,11 @@ pipeline {
         stage('Create web directory')
         {
               input {
-              message 'Author:'
+              message ''
               parameters {
                     string(name: 'AUTHOR', defaultValue: 'Sergio', description: 'Author of the web application deployment ')
-              }
-    }
+                 }
+            }
             steps{
                 echo 'The responsible of this project is ${AUTHOR}'
                 //Fisrt, drop the directory if exists
