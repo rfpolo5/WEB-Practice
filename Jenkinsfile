@@ -6,10 +6,13 @@ pipeline {
         {
               input {
        message 'Directory:'
-        submitterParameter 'RESPONSE'
+      parameters {
+                    string(name: 'DIRECTORY', defaultValue: 'web', description: 'Directory web app?')
+                }
     }
             steps{
-                sh 'mkdir /home/jenkins/${RESPONSE}'
+                sh 'mkdir /home/jenkins/${DIRECTORY}'
+                
             }
         }
         stage('Drop the Apache HTTPD Docker container'){
@@ -21,13 +24,13 @@ pipeline {
         stage('Create the Apache httpd container') {
             steps {
             echo 'Creating the container...'
-            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/jenkins/${RESPONSE}:/usr/local/apache2/htdocs/ httpd'
+            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/jenkins/${DIRECTORY}:/usr/local/apache2/htdocs/ httpd'
             }
         }
         stage('Copy the web application to the container directory') {
             steps {
                 echo 'Copying web application...'             
-                sh 'cp -r web/* /home/jenkins/${RESPONSE}'
+                sh 'cp -r web/* /home/jenkins/${DIRECTORY}'
             }
         }
         stage('Checking the app') {
