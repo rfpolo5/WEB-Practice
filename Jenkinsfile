@@ -1,9 +1,6 @@
 pipeline {
     agent any
-    input {
-       message 'Directory:'
-        submitterParameter 'RESPONSE'
-    }
+   
     stages {
         stage('Create web directory')
         {
