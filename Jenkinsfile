@@ -13,7 +13,7 @@ pipeline {
             steps{
                 echo 'The responsible of this project is ${params.AUTHOR}'
                 //Fisrt, drop the directory if exists
-                sh 'drop /home/jenkins/web'
+                sh 'rm /home/jenkins/web'
                 //Create the directory
                 sh 'mkdir /home/jenkins/web'
                 
