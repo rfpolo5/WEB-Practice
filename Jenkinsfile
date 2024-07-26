@@ -5,13 +5,14 @@ pipeline {
         stage('Create web directory')
         {
             input {
-              message ''
+              message 'Enter the data'
               parameters {
                     string(name:'AUTHOR', defaultValue: 'Sergio', description: 'Author of the web application deployment ')
+                    string(name:'ENVIRONMENT', defaultValue: 'Development',description: 'Environment to deploy')
                  }
             }
             steps{
-                echo "The responsible of this project is ${AUTHOR}"
+                echo "The responsible of this project is ${AUTHOR} and and will be deployed in ${ENVIRONMENT}"
                 //Fisrt, drop the directory if exists
                 sh 'rm -rf /home/jenkins/web'
                 //Create the directory
