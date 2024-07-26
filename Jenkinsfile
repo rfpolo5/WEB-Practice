@@ -6,12 +6,12 @@ pipeline {
         {
               input {
        message 'Author:'
-      parameters {
+       parameters {
                     string(name: 'AUTHOR', defaultValue: 'Sergio', description: 'Author of the web application deployment ')
                 }
     }
             steps{
-                echo 'The responsible of this project is ${AUTHOR}'
+                echo 'The responsible of this project is ${params.AUTHOR}'
                 sh 'mkdir /home/jenkins/web'
                 
             }
