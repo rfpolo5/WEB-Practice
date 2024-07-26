@@ -7,6 +7,10 @@ pipeline {
     stages {
         stage('Create web directory')
         {
+              input {
+       message 'Directory:'
+        submitterParameter 'RESPONSE'
+    }
             steps{
                 sh 'mkdir /home/jenkins/${RESPONSE}'
             }
