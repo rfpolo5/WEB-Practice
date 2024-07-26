@@ -5,13 +5,14 @@ pipeline {
         stage('Create web directory')
         {
               input {
-       message 'Directory:'
+       message 'Author:'
       parameters {
-                    string(name: 'DIRECTORY', defaultValue: 'web', description: 'Directory web app?')
+                    string(name: 'AUTHOR', defaultValue: 'Sergio', description: 'Author of the web application deployment ')
                 }
     }
             steps{
-                sh 'mkdir /home/jenkins/${DIRECTORY}'
+                echo 'The responsible of this project is ${AUTHOR}'
+                sh 'mkdir /home/jenkins/web'
                 
             }
         }
@@ -24,13 +25,13 @@ pipeline {
         stage('Create the Apache httpd container') {
             steps {
             echo 'Creating the container...'
-            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/jenkins/${DIRECTORY}:/usr/local/apache2/htdocs/ httpd'
+            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/jenkins/web:/usr/local/apache2/htdocs/ httpd'
             }
         }
         stage('Copy the web application to the container directory') {
             steps {
                 echo 'Copying web application...'             
-                sh 'cp -r web/* /home/jenkins/${DIRECTORY}'
+                sh 'cp -r web/* /home/jenkins/web'
             }
         }
         stage('Checking the app') {
