@@ -1,7 +1,16 @@
 pipeline {
     agent any
-
+    input {
+       message 'Directory:'
+        submitterParameter 'RESPONSE'
+    }
     stages {
+        stage('Create web directory')
+        {
+            steps{
+                sh 'mkdir /home/jenkins/${RESPONSE}'
+            }
+        }
         stage('Drop the Apache HTTPD Docker container'){
             steps {
             echo 'droping the container...'
@@ -11,13 +20,13 @@ pipeline {
         stage('Create the Apache httpd container') {
             steps {
             echo 'Creating the container...'
-            sh 'docker run -dit --name apache1 -p 9000:80  -v /tmp/web:/usr/local/apache2/htdocs/ httpd'
+            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/jenkins/${RESPONSE}:/usr/local/apache2/htdocs/ httpd'
             }
         }
         stage('Copy the web application to the container directory') {
             steps {
-                echo 'Copying web applucation...'             
-                sh 'cp -r web/* /tmp/web'
+                echo 'Copying web application...'             
+                sh 'cp -r web/* /home/jenkins/${RESPONSE}'
             }
         }
         stage('Checking the app') {
