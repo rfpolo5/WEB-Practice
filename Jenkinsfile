@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Create the Apache httpd container') {
             when { 
-                enviroment name: "SERVER", value: "apache"
+                environment name: "SERVER", value: "apache"
             }
             steps {
             echo 'Creating the container...'
@@ -45,7 +45,7 @@ pipeline {
         stage('Create the Apache nginx container') {
             when {
 
-                enviroment name: "SERVER", value: "nginx"
+                environment name: "SERVER", value: "nginx"
             }
             
             steps {
