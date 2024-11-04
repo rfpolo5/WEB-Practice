@@ -41,7 +41,7 @@ pipeline {
             parallel{
                 stage("rm container apache"){
                     steps{
-                        sh 'docker rm -f apache1'
+                        sh 'ocker rm -f apache1'
 
                     }
                 }
