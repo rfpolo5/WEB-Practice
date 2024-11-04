@@ -1,11 +1,6 @@
 pipeline {
     agent any
-    environment {
-
-        SERVER = ""
-    
-    }
-   
+  
     parameters {
 
         string name: "SERVER", defaultValue: "0"
