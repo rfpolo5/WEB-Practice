@@ -62,8 +62,8 @@ pipeline {
         stage('control error'){
             when{
                 allOf{
-                    enviroment name: "SERVER", value: "apache"
-                    enviroment name: "ENV", value: "test"
+                    environment name: "SERVER", value: "apache"
+                    environment name: "ENV", value: "test"
                 }
             }
             steps{
@@ -73,8 +73,8 @@ pipeline {
         stage('control error2'){
             when{
                 allOf{
-                    enviroment name: "SERVER", value: "nginx"
-                    enviroment name: "ENV", value: "dev"
+                    environment name: "SERVER", value: "nginx"
+                    environment name: "ENV", value: "dev"
                 }
             }
             steps{
