@@ -41,59 +41,27 @@ pipeline {
             steps {
             echo 'droping the container...'
             sh 'docker rm -f apache1'
+            sh 'docker rm -f nginx1'
+
             }
         }
         stage('Create the Apache httpd container') {
-            when {
-                allOf{
+
+            parallel {
+
+                    steps {
+                        echo 'Creating the container...'
+                        sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/local/apache2/htdocs/ httpd'
+                    }
                     
-                    environment name: "SERVER", value: "apache"
-                    environment name: "ENV", value: "dev"
-                }
-            }
-            steps {
-            echo 'Creating the container...'
-            sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/local/apache2/htdocs/ httpd'
-            }
-        }
-        
-        stage('Create the Apache nginx container') {
-            when {
-                allOf{
-                    
-                    environment name: "SERVER", value: "nginx"
-                    environment name: "ENV", value: "test"
-                }            
-            }
-            
-            steps {
-            echo 'Creating the container...'
-            sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/share/nginx/html nginx'
+                    steps {
+                        echo 'Creating the container...'
+                        sh 'docker run --privileged -dit --name nginx1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/share/nginx/html nginx'
+                    }
             }
         }
 
-        stage('control error'){
-            when{
-                allOf{
-                    environment name: "SERVER", value: "apache"
-                    environment name: "ENV", value: "test"
-                }
-            }
-            steps{
-                echo "no puede desplegar apache en test"
-            }
-        }
-        stage('control error2'){
-            when{
-                allOf{
-                    environment name: "SERVER", value: "nginx"
-                    environment name: "ENV", value: "dev"
-                }
-            }
-            steps{
-                echo "no puede desplegar nginx en dev"
-            }
-        }
+
                 
         stage('Copy the web application to the container directory') {
             steps {
@@ -105,6 +73,8 @@ pipeline {
             steps {
                 echo 'Testing the web app'
                 sh 'wget http://localhost:9100'
+                sh 'wget http://localhost:9200'
+
             }
         }       
     }
