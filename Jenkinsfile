@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    triggers {
+
+        pollSCM: '''* * * * *'''
+    }
   
     parameters {
 
