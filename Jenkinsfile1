@@ -8,7 +8,7 @@ pipeline {
     }
 
     options{
-
+        parallelsAlwaysFalFast()
         timeout(1)
         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '4')
 
@@ -38,10 +38,11 @@ pipeline {
             }
         }
         stage('Drop the Apache HTTPD Docker container'){
+            failFast true
             parallel{
                 stage("rm container apache"){
                     steps{
-                        sh 'ocker rm -f apache1'
+                        sh 'docker rm -f apache1'
 
                     }
                 }
