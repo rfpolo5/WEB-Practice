@@ -8,7 +8,7 @@ pipeline {
    
     parameters {
 
-        string name: "server", defaultValue: "0"
+        string name: "SERVER", defaultValue: "0"
     }
 
   
