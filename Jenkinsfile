@@ -4,19 +4,17 @@ pipeline {
     parameters {
 
         choice choices:["nginx", "apache"], name: "SERVER"
+        choice choices:["dev", "test", "prod"], name: "ENV"
     }
 
   
     stages {
         stage('Create web directory')
         {
-            input {
-              message 'Enter the data'
-              parameters {
-                    string(name:'AUTHOR', defaultValue: 'Sergio', description: 'Author of the web application deployment ')
-                    string(name:'ENVIRONMENT', defaultValue: 'Development',description: 'Environment to deploy')
-                 }
+            when {
+                equals(actual: currentBuilder.number, expected: 1)
             }
+            
             steps{
                 echo "The responsible of this project is ${AUTHOR} and and will be deployed in ${ENVIRONMENT}"
                 //Fisrt, drop the directory if exists
@@ -33,8 +31,12 @@ pipeline {
             }
         }
         stage('Create the Apache httpd container') {
-            when { 
-                environment name: "SERVER", value: "apache"
+            when {
+                allOf{
+                    
+                    environment name: "SERVER", value: "apache"
+                    environment name: "ENV", value: "dev"
+                }
             }
             steps {
             echo 'Creating the container...'
@@ -44,8 +46,11 @@ pipeline {
         
         stage('Create the Apache nginx container') {
             when {
-
-                environment name: "SERVER", value: "nginx"
+                allOf{
+                    
+                    environment name: "SERVER", value: "apache"
+                    environment name: "ENV", value: "test"
+                }            
             }
             
             steps {
