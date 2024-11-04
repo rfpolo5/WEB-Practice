@@ -1,5 +1,11 @@
 pipeline {
     agent any
+
+    enviroment {
+
+        SERVER = "ngix"
+    
+    }
    
     stages {
         stage('Create web directory')
@@ -27,11 +33,27 @@ pipeline {
             }
         }
         stage('Create the Apache httpd container') {
+            when { 
+                enviroment name: "SERVER", value: "apache"
+            }
             steps {
             echo 'Creating the container...'
             sh 'docker run --privileged -dit --name apache1 -p 9000:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/local/apache2/htdocs/ httpd'
             }
         }
+        
+        stage('Create the Apache nginx container') {
+            when {
+
+                enviroment name: "SERVER", value: "nginx"
+            }
+            
+            steps {
+            echo 'Creating the container...'
+            sh 'docker run --privileged -dit --name apache1 -p 9000:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/local/apache2/htdocs/ httpd'
+            }
+        }
+        
         stage('Copy the web application to the container directory') {
             steps {
                 echo 'Copying web application...'             
