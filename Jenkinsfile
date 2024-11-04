@@ -3,7 +3,7 @@ pipeline {
 
     environment {
 
-        SERVER = "nginx"
+        SERVER = "apache"
     
     }
    
