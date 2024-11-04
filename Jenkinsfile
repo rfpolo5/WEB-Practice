@@ -7,6 +7,13 @@ pipeline {
         cron '* * * * *'
     }
 
+    options{
+
+        timeout(1)
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '4')
+
+    }
+
     parameters {
 
         choice choices:["nginx", "apache"], name: "SERVER"
