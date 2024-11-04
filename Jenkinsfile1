@@ -54,7 +54,7 @@ pipeline {
                         sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/local/apache2/htdocs/ httpd'
                     }
                 }
-                stage('Create the Apache c container') {
+                stage('Create the Apache nginx container') {
                     
                     steps {
                         echo 'Creating the container...'
