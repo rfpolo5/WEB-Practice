@@ -48,7 +48,7 @@ pipeline {
             when {
                 allOf{
                     
-                    environment name: "SERVER", value: "apache"
+                    environment name: "SERVER", value: "nginx"
                     environment name: "ENV", value: "test"
                 }            
             }
@@ -58,7 +58,30 @@ pipeline {
             sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/share/nginx/html nginx'
             }
         }
-        
+
+        stage('control error'){
+            when{
+                allOf{
+                    enviroment name: "SERVER", value: "apache"
+                    enviroment name: "ENV", value: "test"
+                }
+            }
+            steps{
+                echo "no puede desplegar apache en test"
+            }
+        }
+        stage('control error2'){
+            when{
+                allOf{
+                    enviroment name: "SERVER", value: "nginx"
+                    enviroment name: "ENV", value: "dev"
+                }
+            }
+            steps{
+                echo "no puede desplegar nginx en dev"
+            }
+        }
+                
         stage('Copy the web application to the container directory') {
             steps {
                 echo 'Copying web application...'             
