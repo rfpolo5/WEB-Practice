@@ -47,7 +47,7 @@ pipeline {
                 }
                 stage("rm container nginx"){
                     steps{
-                        sh 'docker rm -f apache1'
+                        sh 'docker rm -f nginx1'
 
                     }
                 }                
