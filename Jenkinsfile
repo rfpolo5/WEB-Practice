@@ -1,12 +1,17 @@
 pipeline {
     agent any
-
     environment {
 
         SERVER = "apache"
     
     }
    
+    parameters {
+
+        string name: "server", defaultValue: "0"
+    }
+
+  
     stages {
         stage('Create web directory')
         {
