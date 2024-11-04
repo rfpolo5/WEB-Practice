@@ -3,9 +3,9 @@ pipeline {
 
     triggers {
 
-        pollSCM: "* * * * *"
+        pollSCM '''* * * * *'''
     }
-  
+
     parameters {
 
         choice choices:["nginx", "apache"], name: "SERVER"
