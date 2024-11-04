@@ -50,7 +50,7 @@ pipeline {
             
             steps {
             echo 'Creating the container...'
-            sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web::/usr/share/nginx/html nginx'
+            sh 'docker run --privileged -dit --name apache1 -p 9100:80  -v /home/rafaelpolo/Documentos/Estudio/install/Jenkins/web:/usr/share/nginx/html nginx'
             }
         }
         
