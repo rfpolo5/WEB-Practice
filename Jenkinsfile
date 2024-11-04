@@ -12,7 +12,7 @@ pipeline {
         stage('Create web directory')
         {
             when {
-                equals(actual: currentBuilder.number, expected: 1)
+                equals(actual: currentBuild.number, expected: 1)
             }
             
             steps{
