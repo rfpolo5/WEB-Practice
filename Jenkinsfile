@@ -3,7 +3,7 @@ pipeline {
   
     parameters {
 
-        string name: "SERVER", defaultValue: "0"
+        choice choices:["nginx", "apache"], name: "SERVER"
     }
 
   
